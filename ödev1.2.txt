@@ -1,0 +1,21 @@
+--a)Belirli Kolonları Seçme: Tablodaki belirli kolonları seçmek için kullanırız. Select from tablonun olduğu dosyayı belirtirken order by koduyla da tablonun istediğimiz kısımlarını seçmesini sağlarız.
+SELECT firstname, lastname, salary
+FROM public.employees;
+
+--b)DISTINC Komutu İle Tekrarları Önleme : Çalışanların çalıştıkları departmanları ayrı ayrı listelememizi sağlayan komuttur. 
+SELECT DISTINCT departmentid
+FROM public.employees;
+
+--c)Belirli Bir Departmana Ait Çalışanları Listeleme :public.employees dosyası içinden departmentid de olan verilerin listelenmesini sağlayan komuttur.
+SELECT *
+FROM public.employees
+WHERE departmentid =  (SELECT departmentid FROM public.departments WHERE department_name = 'IT');
+
+--d)Maaşa Göre Sıralama: Tablodaki çalışan maaşlarını büyükten küçüğe sıralamaya yarayan komuttur.
+SELECT * 
+FROM public.employees
+ORDER BY salary DESC;
+
+--e)Kolonları Birleştirme: Tablodaki seçili kolonları birleştirmemize yarayan komuttur. 
+SELECT CONCAT(firstname,  '' ,lastname) AS full_name 
+FROM public.employees;
