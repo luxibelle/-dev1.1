@@ -1,0 +1,39 @@
+SELECT COUNT(*) 
+FROM Invoice
+WHERE invoice_id IS NULL 
+AND customer_id IS NULL 
+AND invoice_date IS NULL 
+AND total IS NULL 
+AND billing_city IS NULL 
+AND billing_state IS NULL 
+AND billing_country IS NULL 
+AND billingpostal_code IS NULL 
+AND billing_address IS NULL;
+--Toplam row:1--
+--bu kod stünlardaki null olan kayıt sayısını verir--
+
+
+
+SELECT 
+    invoice_id, 
+    customer_id, 
+    total AS eski_total,  
+    total * 2 AS yeni_total, 
+    total * 2 AS eski_totalin_iki_kati, -- Eski değerin 2 katını aldık--
+    CASE 
+        WHEN total * 2 > total THEN 'Yeni Total Daha Büyük' 
+        WHEN total * 2 < total THEN 'Eski Total Daha Büyük'
+        ELSE 'Eski ve Yeni Total Eşit'
+    END AS kucuktenBuyugeKarşılaştırma 
+FROM Invoice
+ORDER BY yeni_total DESC;-- yeni değeri küçükten büyüğe sıralıyoruz--
+--ilk önce total komutunu kullarak total değerin 2 katını aldık.Daha sonra whenve else kullanarak eski ve yeni total değerler arasında karşılaştırma yaptık.Son olarak da ORDER BY kullanarak yenideğeri küçükten büyüğe sıraladık--
+
+
+SELECT 
+    LEFT(billing_address, 3) || RIGHT(billing_address, 4) AS "Açık Adres",
+    invoice_date
+FROM Invoice
+WHERE EXTRACT(YEAR FROM invoice_date) = 2013 
+AND EXTRACT(MONTH FROM invoice_date) = 8;
+--ilk olarak left ve right kullanarak adres kolonunu 3 karakter sağdan ve 4 karakter soldan birleştirdik. Bu birleşimi açık adres başlığıyla tabloya yazdık.Daha sonra WHERE EXTRACT kolununda yeni açık adresi 2013 yılı 8.ay a göre filtreledik.
